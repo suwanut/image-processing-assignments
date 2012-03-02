@@ -1,0 +1,13 @@
+package assignment6;
+
+public class A6Driver {
+
+  /**
+   * @param args
+   */
+  public static void main(String[] args) {
+    // TODO Auto-generated method stub
+
+  }
+
+}

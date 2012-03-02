@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.BufferedImageOp;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 
@@ -15,6 +16,15 @@ public class A5Driver {
    */
   public static void main(String[] args) throws IOException {
 //    String name = "livingroom.tif";
+    
+    System.out.println(Arrays.toString(args));
+    
+    if(args.length < 1){
+      System.out.println("Usage: java -jar Filename.jpg");
+      System.out.println("Exiting ...");
+      System.exit(0);
+    }
+
     
     String name = args[0];
 
