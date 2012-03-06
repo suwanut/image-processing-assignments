@@ -5,10 +5,11 @@ import java.awt.image.BufferedImage;
 
 public class SegmentationOp extends AbstractBufferedImageOp{
   
-  public int getColor(Color c){
-    return c.getBlue();
+  public void setMode(ColorMode mode){
+    super.setMode(mode);
   }
-
+    
+  
   @Override
   public BufferedImage filter(BufferedImage src, BufferedImage dest){
 
@@ -25,7 +26,7 @@ public class SegmentationOp extends AbstractBufferedImageOp{
     for(int y = 0; y < height; y++){
       for(int x = 0; x < width; x++){
         Color c = new Color(src.getRGB(x, y));
-        sigma+= getColor(c);
+        sigma+= getColorComp(c);
       }
     }
     
@@ -42,12 +43,12 @@ public class SegmentationOp extends AbstractBufferedImageOp{
       for(int y = 0; y < height; y++){
         for(int x = 0; x < width; x++){
           Color c = new Color(src.getRGB(x, y));
-          if(getColor(c) > threshold){
-            sigmaFore += getColor(c);
+          if(getColorComp(c) > threshold){
+            sigmaFore += getColorComp(c);
             numFore++;
           }
           else{
-            sigmaBack += getColor(c);
+            sigmaBack += getColorComp(c);
             numBack++;
           }
         }
@@ -63,7 +64,7 @@ public class SegmentationOp extends AbstractBufferedImageOp{
     for(int y = 0; y < height; y++){
       for(int x = 0; x < width; x++){
         Color c = new Color(src.getRGB(x, y));
-        if(getColor(c) > threshold){
+        if(getColorComp(c) > threshold){
           dest.setRGB(x, y, cFore.getRGB());
         }
         else{
@@ -71,7 +72,6 @@ public class SegmentationOp extends AbstractBufferedImageOp{
         }
       }
     }
-
 
     return dest;
   }

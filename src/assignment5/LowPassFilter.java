@@ -26,7 +26,7 @@ public class LowPassFilter extends AbstractBufferedImageOp{
 
     int L = (int) (f*Math.min(width, height));
 
-    if(dest == null){            
+    if(dest == null){
       dest = createCompatibleDestImage(src, null);
     }
     
