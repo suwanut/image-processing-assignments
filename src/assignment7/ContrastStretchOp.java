@@ -15,8 +15,8 @@ public class ContrastStretchOp extends AbstractBufferedImageOp{
       dest = createCompatibleDestImage(src, null);
     }
 
-    int min_val = Integer.MAX_VALUE;
-    int max_val = Integer.MIN_VALUE;
+    int min_val = 255;
+    int max_val = 0;
 
     for(int y = 0; y < height; y++){
       for(int x = 0; x < width; x++){
@@ -30,12 +30,24 @@ public class ContrastStretchOp extends AbstractBufferedImageOp{
         }
       }
     }
+    
+    int G   = 256;
+    int[] T = new int[G];
+    float a = 0;
+    float b = G-1;
+    float k   = (b - a)/(max_val - min_val);
+    
+    
+    for(int p = 0; p < G; p++){
+      T[p] = (int) ((p - min_val )*k + a);
+    }
 
     for(int y = 0; y < height; y++){
       for(int x = 0; x < width; x++){
         Color c      = new Color(src.getRGB(x, y));
         int color    = c.getBlue();
-        int newColor = 255*(color - min_val)/(max_val - min_val);
+        int newColor = T[color];
+//        System.out.println(color+" to "+newColor);
         Color newC   = new Color(newColor, newColor, newColor);
         dest.setRGB(x, y, newC.getRGB());
       }

@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 
+import assignment6.SegmentationOp;
+
 import static java.lang.Math.*;
 
 
@@ -14,20 +16,19 @@ public class HoughTransform extends AbstractBufferedImageOp{
   public BufferedImage filter(BufferedImage src, BufferedImage dest) {
 
     src = new LaplaceOp().filter(src, null);
+    src = new SegmentationOp().filter(src, null);
 
     int width  = src.getWidth();
     int height = src.getHeight();
 
     int theta_min = -90;
     int theta_max =  90;
-    int r_max     = (int) Math.sqrt(width*width + height*height);
+    int r_max     = (int) sqrt(width*width + height*height);
     
     int destWidth  = 2*theta_max+1;
     int destHeight = 2*r_max+1;
 
     int[][] acc   = new int[destHeight][destWidth];
-
-    System.out.println("This is it");
 
     for(int y = 0; y < height; y++){
       for(int x = 0; x < width; x++){
@@ -47,13 +48,13 @@ public class HoughTransform extends AbstractBufferedImageOp{
     
     for(int y = 0; y < destHeight; y++){
       for(int x = 0; x < destWidth; x++){
-        int lambda = Math.min(20*acc[y][x], 255);
+        int lambda = Math.min(18*acc[y][x], 255);
         Color c    = new Color(lambda, lambda, lambda);        
         dest.setRGB(x, y, c.getRGB());
       }
     }
     
-    return new ContrastStretchOp().filter(dest, null);
+    return dest;//new ContrastStretchOp().filter(dest, null);
   }
 
   /**

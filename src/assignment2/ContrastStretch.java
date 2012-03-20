@@ -50,6 +50,8 @@ public class ContrastStretch {
    */
   public static void execute(String name) throws IOException {
     
+    name = "cameraman.tif";
+    
     String[] arg = name.split("\\.");
     String filename = arg[0];
     String extension = arg[1];    
@@ -76,5 +78,8 @@ public class ContrastStretch {
 
   }
   
+  public static void main(String args[]) throws IOException{
+    execute("");
+  }
 
 }
