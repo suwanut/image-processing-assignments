@@ -14,13 +14,13 @@ public class A4Driver{
     
     System.out.println(Arrays.toString(args));
     
-    if(args.length < 1){
-      System.out.println("Usage: java -jar Filename.jpg");
-      System.out.println("Exiting ...");
-      System.exit(0);
-    }
+//    if(args.length < 1){
+//      System.out.println("Usage: java -jar Filename.jpg");
+//      System.out.println("Exiting ...");
+//      System.exit(0);
+//    }
     
-//    args = new String[]{"balloons_noisy.png"};
+    args = new String[]{"check.gif"};
     
     LaplaceOperator.execute(args[0]);
     RobertsOperator.execute(args[0]);

@@ -6,5 +6,6 @@
 	<classpathentry kind="lib" path="/media/MyVolume/MyPrograms/Eclipse/image-processing-assignments/dependencies/jai_imageio-1_0_01/lib/jai_imageio.jar"/>
 	<classpathentry kind="lib" path="/media/MyVolume/MyPrograms/Eclipse/image-processing-assignments/dependencies/jai_imageio-1_0_01/lib/ip.jar"/>
 	<classpathentry kind="lib" path="/media/MyVolume/Libraries/Guava/guava-10.0.1.jar" sourcepath="/media/MyVolume/Libraries/Guava/guava-libraries/guava"/>
+	<classpathentry kind="lib" path="/media/MyVolume/MyPrograms/Eclipse/image-processing-assignments/dependencies/jai_imageio-1_0_01/lib/mlplot-v1.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
