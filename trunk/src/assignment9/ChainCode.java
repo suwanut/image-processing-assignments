@@ -21,30 +21,44 @@ public class ChainCode {
   int width;
   int height;
 
-//  private int direction = 1;
   private int direction = 7;
-  private boolean flag  = false;
   
-  private HashMap<Integer, Integer> map = new HashMap<Integer, Integer>()
-      {{
-        put(0,3);
-        put(7,2);
-        put(6,1);
-        put(5,0);
-        put(4,7);
-        put(3,6);
-        put(2,5);
-        put(1,4);
-      }};
-
 
   public ChainCode(BufferedImage image){
     this.image  = image;
     this.width  = image.getWidth();
     this.height = image.getHeight();
   }
+  
+  public ArrayList<String> getNormalizedChainCode(){
+    ArrayList<String> list = getChainCode();
+    ArrayList<String> normList = new ArrayList<String>();
+    for(String code:list){
+      normList.add(findLowestPerm(code));
+    }
+    return normList;
+  }
+  
+  private String findLowestPerm(String code){
+    String minCode = code;
+    BigInteger min = new BigInteger(minCode);
+    
+    for(int i = 0; i < code.length(); i++){
+      code = rotateRight(code);
+      BigInteger n = new BigInteger(code);
+      if(n.compareTo(min) < 0){
+        minCode = code;
+        min     = n;
+      }
+    }    
+    return minCode;
+  }
+  
+  private String rotateRight(String code){
+    return code.charAt(code.length()-1) + code.substring(0,code.length()-1);
+  }
 
-  public ArrayList<String> getChainCodes(){
+  public ArrayList<String> getChainCode(){
     ArrayList<String> list = new ArrayList<String>();
 
     int x,y;
@@ -62,9 +76,7 @@ public class ChainCode {
     }
     return list;
   }
-
-
-
+  
   private String f(int x, int y) {
     String code = "";
 
@@ -76,7 +88,6 @@ public class ChainCode {
     code = code + direction;
 
     do{
-      System.out.print(" ("+x+","+y +"),");
       x = (int) d2.getWidth();
       y = (int) d2.getHeight();
             
@@ -95,28 +106,21 @@ public class ChainCode {
    * 567 
    */
   private Dimension getNextCell8(int x, int y){
-//    int startDirection = ((direction & 1) == 0)?((direction+7) % 8):((direction+6) % 8);
-    int startDirection = getStartDirection(direction);
+    int startDirection = ((direction & 1) == 0)?((direction+7) % 8):((direction+6) % 8);
     int i = 0;
     Dimension d = null;
     while(i<7){
-      System.out.print(","+startDirection);
       d = getCellInDirection(x, y, startDirection);      
       if(d != null){
-        System.out.println("Changing dir from "+direction+" to "+startDirection);
         direction = startDirection;
         break;
       }
-      startDirection = mod ((startDirection -1), 8); 
+      startDirection = mod ((startDirection +1), 8); 
       i++;
     }
-    System.out.println();
     return d;
   }
   
-  private int getStartDirection(int startDirection){
-    return map.get(startDirection);
-  }
   
 
   private Dimension getCellInDirection(int x, int y, int dir){
@@ -151,68 +155,20 @@ public class ChainCode {
   private boolean isObjectPixel(int x, int y){
     return (new Color(image.getRGB(x, y)).getBlue()>0);
   }
-
-  
-  
-  
-  
-  
-  public static void main(String[] args) throws IOException {
-
-    String name = "bounadry.gif";
-
-    System.out.println(Arrays.toString(args));
-
-    String[] arr = name.split("\\.");
-    String format = arr[1];
-
-
-    BufferedImage src = ImageIO.read(new File(name));
-    ColorModel dstCM = src.getColorModel();
-
-    BufferedImage image = new BufferedImage(dstCM, dstCM.createCompatibleWritableRaster(4, 4),
-        dstCM.isAlphaPremultiplied(), null);
-
-    for(int y = 0; y < 4; y++){
-      for(int x = 0; x < 4; x++){
-        int rgb = new Color(0,0,0).getRGB();
-        image.setRGB(x, y, rgb);
-      }
-    }
-
-    /*
-     *   0, 200, 200, 0
-     * 200,   0, 200, 0
-     *   0, 200, 200, 0
-     *   0,   0,   0, 0
-     * 
-     * Chain code for it is:
-     */
-
-    int rgb = new Color(255,255,255).getRGB();
-    image.setRGB(1, 0, rgb);
-    image.setRGB(2, 0, rgb);
-    image.setRGB(2, 1, rgb);
-    image.setRGB(2, 2, rgb);
-    image.setRGB(1, 2, rgb);
-    image.setRGB(0, 1, rgb);
-
-    IPUtil.displayMatrix(IPUtil.readImageAsMatrix(image));
-    System.out.println("-------");
-
-    ChainCode cc = new ChainCode(image);
-    for(String s:cc.getChainCodes()){
-      System.out.println(s);
-    }
-    
-//    int n = -11;
-//    System.out.println(cc.mod(n,4));
-  }
-  
-  private int mod(int a, int b){
+ 
+   private int mod(int a, int b){
     assert(b>0);    
     int k = (int) Math.ceil((float)Math.abs(a)/b);
     a += (a<0)?k*b:0;
     return a % b;
+  }
+
+  public String getDerivativeChainCode(String s) {
+    String sCpy = s+s.charAt(0);
+    String derivCode = "";
+    for(int i = 0; i < s.length(); i++){
+      derivCode = derivCode + Math.abs(sCpy.charAt(i)-sCpy.charAt(i+1));
+    }
+    return derivCode;
   }
 }
