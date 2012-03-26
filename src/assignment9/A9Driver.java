@@ -18,41 +18,42 @@ public class A9Driver {
    * @throws IOException 
    */
   public static void main(String[] args) throws IOException {
-//          String name = "check.gif";
-    String name = "bounadry.gif";
+    //    String name = "check.gif";
+    //    String name = "bounadry.gif";
+    //    String name = "apple.gif";
 
     System.out.println(Arrays.toString(args));
 
-    //    if(args.length < 1){
-    //      System.out.println("Usage: java -jar Filename.jpg");
-    //      System.out.println("Exiting ...");
-    //      System.exit(0);
-    //    }
+    if(args.length < 1){
+      System.out.println("Usage: java -jar Filename.jpg");
+      System.out.println("Exiting ...");
+      System.exit(0);
+    }
 
 
-    //    String name = args[0];
+    String name = args[0];
 
     String[] arr = name.split("\\.");
     String format = arr[1];
 
 
     BufferedImage image = ImageIO.read(new File(name));
-    //    CannyEdgeOp cannyOp = new CannyEdgeOp(10);
-    //    BufferedImage boundaryImg = cannyOp.filter(image, null);
 
 
-    IPUtil.displayMatrix(IPUtil.readImageAsMatrix(image));
-//    int[][] imgMatrix = SobelOperator.applySobelOperator(IPUtil.readImageAsMatrix(image));
-//    IPUtil.displayMatrix(imgMatrix);
-    
-    System.out.println("-------");
+    //    IPUtil.displayMatrix(IPUtil.readImageAsMatrix(image));
+
     ChainCode cc = new ChainCode(image);
-    for(String s:cc.getChainCodes()){
+    System.out.println("Chain code is");
+    for(String s:cc.getChainCode()){
       System.out.println(s);
     }
 
-    //    File file = new File("boundary-"+name);
-    //    ImageIO.write(boundaryImg, format, file);
+    System.out.println("\nNormalized Chain code is");
+    for(String s:cc.getNormalizedChainCode()){
+      System.out.println(s);
+      System.out.println("\nDerivative chain code is");
+      System.out.println(cc.getDerivativeChainCode(s));
 
+    }    
   }
 }
