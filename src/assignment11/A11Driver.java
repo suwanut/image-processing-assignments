@@ -1,4 +1,4 @@
-package assignment10;
+package assignment11;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -7,16 +7,16 @@ import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 
-
-public class A10Driver {
+public class A11Driver {
 
   /**
    * @param args
    * @throws IOException 
    */
   public static void main(String[] args) throws IOException {
-//    String name = "fourier2.png";
-//    double factor  = 0.3;
+    //    String name = "check.gif";
+    //    String name = "bounadry.gif";
+//        String name = "apple.gif";
 
     System.out.println(Arrays.toString(args));
 
@@ -28,19 +28,26 @@ public class A10Driver {
 
 
     String name = args[0];
-    double factor = Double.parseDouble(args[1]);
 
     String[] arr = name.split("\\.");
     String format = arr[1];
 
 
-    BufferedImage image  = ImageIO.read(new File(name));
-    BoundaryFilterOp bOp = new BoundaryFilterOp(factor);
-    BufferedImage bImg   = bOp.filter(image, null);
+    BufferedImage image = ImageIO.read(new File(name));
+
+
     //    IPUtil.displayMatrix(IPUtil.readImageAsMatrix(image));
-    File file = new File("boundaryFilter-"+name);
-    ImageIO.write(bImg, format, file);
+
+    ChainCode4 cc = new ChainCode4(image);
+    int startX = cc.getStartX();
+    int startY = cc.getStartY();
+    System.out.println("Chain code is");
+    for(String s:cc.getChainCode()){
+      System.out.println(s);
+    }
+    AreaCalculator ac = new AreaCalculator();
+    int area = ac.getAreaFromChainCode(cc.getChainCode(), startX);
+    System.out.println("Area is = "+area);
 
   }
-
 }
