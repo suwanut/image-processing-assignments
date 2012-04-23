@@ -16,19 +16,19 @@ public class A6Driver {
    */
   public static void main(String[] args) throws IOException {
 
-    //    String name = "rgb.jpeg";
+        String name = "rgb.jpeg";
     //    String name = "woman_blonde.tif";
 
     System.out.println(Arrays.toString(args));
 
-    if(args.length < 1){
-      System.out.println("Usage: java -jar Filename.jpg");
-      System.out.println("Exiting ...");
-      System.exit(0);
-    }
+//    if(args.length < 1){
+//      System.out.println("Usage: java -jar Filename.jpg");
+//      System.out.println("Exiting ...");
+//      System.exit(0);
+//    }
 
 
-    String name = args[0];
+//    String name = args[0];
 
     String[] arr = name.split("\\.");
     String format = arr[1];
