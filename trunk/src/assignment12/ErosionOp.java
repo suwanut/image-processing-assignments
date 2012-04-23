@@ -8,6 +8,11 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
+/**
+ * ErosionOp implementation using moving window.
+ * @author apurv
+ *
+ */
 public class ErosionOp extends AbstractBufferedImageOp{
 
 
@@ -19,7 +24,7 @@ public class ErosionOp extends AbstractBufferedImageOp{
     this.kernel = kernel;
   }
 
-
+  
   @Override
   public BufferedImage filter(BufferedImage src, BufferedImage dest) {
 
