@@ -18,7 +18,7 @@ public class SkeletonOp extends AbstractBufferedImageOp{
     UnionOp uOp = new UnionOp();
     DifferenceOp diffOp = new DifferenceOp();
     OpenOp openOp = new OpenOp(kernel);
-    ErosionOp erosionOp = new ErosionOp(kernel);
+    ErosionOp2 erosionOp = new ErosionOp2(kernel);
     
     dest = diffOp.diff(src, src);
     
